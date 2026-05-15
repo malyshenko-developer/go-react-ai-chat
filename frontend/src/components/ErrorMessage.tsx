@@ -3,7 +3,7 @@ interface ErrorMessageProps {
 	onClose: () => void
 }
 
-const ErrorMessage = ({ message, onClose }: ErrorMessageProps) => {
+export const ErrorMessage = ({ message, onClose }: ErrorMessageProps) => {
 	return (
 		<div className="bg-red-200 text-red-700 px-4 py-3 rounded-xl flex items-center justify-between mb-4 shadow-red-400 shadow-md">
 			<p className="text-sm">{message}</p>
@@ -16,5 +16,3 @@ const ErrorMessage = ({ message, onClose }: ErrorMessageProps) => {
 		</div>
 	)
 }
-
-export default ErrorMessage

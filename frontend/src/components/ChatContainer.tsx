@@ -2,8 +2,9 @@ import { useState } from "react"
 
 import { useChat } from "@/hooks/useChat.ts"
 
-import ErrorMessage from "@/components/ErrorMessage.tsx"
+import { ErrorMessage } from "@/components/ErrorMessage.tsx"
 import { LoadingIndicator } from "@/components/LoadingIndicator.tsx"
+import { MessageInput } from "@/components/MessageInput.tsx"
 import { MessageList } from "@/components/MessageList.tsx"
 import { WelcomeScreen } from "@/components/WelcomeScreen.tsx"
 
@@ -19,16 +20,25 @@ export const ChatContainer = () => {
 	}
 
 	return (
-		<div className={"text-white w-full max-w-3xl mx-auto px-4 py-8"}>
-			{messages.length === 0 && <WelcomeScreen />}
+		<div
+			className={
+				"text-white w-full max-w-3xl mx-auto px-4 py-8 flex-1 flex flex-col"
+			}
+		>
+			<div className="flex-1 overflow-y-auto">
+				{messages.length === 0 && <WelcomeScreen />}
+				{messages.length > 0 && <MessageList messages={messages} />}
+				{isLoading && <LoadingIndicator />}
+				{error && <ErrorMessage message={error} onClose={clearError} />}
+			</div>
 
-			{messages.length > 0 && <MessageList messages={messages} />}
-
-			{isLoading && <LoadingIndicator />}
-			<LoadingIndicator />
-
-			{error && <ErrorMessage message={error} onClose={clearError} />}
-			<ErrorMessage message={"Ошибка =("} onClose={clearError} />
+			<MessageInput
+				value={inputValue}
+				onChange={setInputValue}
+				onSend={handleSend}
+				disabled={isLoading}
+				placeholder="Ask whatever you want"
+			/>
 		</div>
 	)
 }
