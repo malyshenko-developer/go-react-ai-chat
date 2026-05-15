@@ -17,7 +17,7 @@ const (
 	DefaultPort          = "8080"
 	DefaultAPIURL        = "https://openrouter.ai/api/v1/chat/completions"
 	DefaultAllowedOrigin = "http://localhost:5173"
-	DefaultModel         = "google/gemini-2.0-flash-exp:free"
+	DefaultModel         = "google/gemma-4-31b-it:free"
 )
 
 type Config struct {
