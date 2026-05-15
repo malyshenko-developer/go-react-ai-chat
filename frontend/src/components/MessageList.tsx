@@ -8,7 +8,7 @@ interface MessageListProps {
 
 export const MessageList = ({ messages }: MessageListProps) => {
 	return (
-		<div className={"space-y-1"}>
+		<div className={"space-y-2"}>
 			{messages.map((msg, index) => (
 				<MessageBubble key={`message ${index}`} message={msg} />
 			))}
