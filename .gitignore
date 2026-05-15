@@ -7,7 +7,6 @@
 bin/
 vendor/
 *.out
-.env
 
 # IDE
 .idea/
