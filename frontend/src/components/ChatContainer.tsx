@@ -1,9 +1,9 @@
 import { useState } from "react"
 
-import type { Message } from "@/types/message.ts"
-
 import { useChat } from "@/hooks/useChat.ts"
 
+import ErrorMessage from "@/components/ErrorMessage.tsx"
+import { LoadingIndicator } from "@/components/LoadingIndicator.tsx"
 import { MessageList } from "@/components/MessageList.tsx"
 import { WelcomeScreen } from "@/components/WelcomeScreen.tsx"
 
@@ -24,11 +24,11 @@ export const ChatContainer = () => {
 
 			{messages.length > 0 && <MessageList messages={messages} />}
 
-			{isLoading && <div className="text-white">Loading...</div>}
+			{isLoading && <LoadingIndicator />}
+			<LoadingIndicator />
 
-			{error && (
-				<div className="bg-red-100 text-red-700 p-2 rounded mb-2">{error}</div>
-			)}
+			{error && <ErrorMessage message={error} onClose={clearError} />}
+			<ErrorMessage message={"Ошибка =("} onClose={clearError} />
 		</div>
 	)
 }
