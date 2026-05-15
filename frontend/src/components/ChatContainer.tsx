@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { useChat } from "@/hooks/useChat.ts"
 
@@ -11,6 +11,11 @@ import { WelcomeScreen } from "@/components/WelcomeScreen.tsx"
 export const ChatContainer = () => {
 	const { messages, isLoading, error, send, clearError } = useChat()
 	const [inputValue, setInputValue] = useState("")
+	const bottomRef = useRef<HTMLDivElement>(null)
+
+	useEffect(() => {
+		bottomRef.current?.scrollIntoView({ behavior: "smooth" })
+	}, [messages])
 
 	const handleSend = () => {
 		if (inputValue.trim() && !isLoading) {
@@ -38,6 +43,7 @@ export const ChatContainer = () => {
 					</>
 				)}
 				{error && <ErrorMessage message={error} onClose={clearError} />}
+				<div ref={bottomRef} />
 			</div>
 
 			<MessageInput
