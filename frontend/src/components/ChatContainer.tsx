@@ -1,7 +1,10 @@
 import { useState } from "react"
 
+import type { Message } from "@/types/message.ts"
+
 import { useChat } from "@/hooks/useChat.ts"
 
+import { MessageList } from "@/components/MessageList.tsx"
 import { WelcomeScreen } from "@/components/WelcomeScreen.tsx"
 
 export const ChatContainer = () => {
@@ -19,9 +22,7 @@ export const ChatContainer = () => {
 		<div className={"text-white w-full max-w-3xl mx-auto px-4 py-8"}>
 			{messages.length === 0 && <WelcomeScreen />}
 
-			{messages.length > 0 && (
-				<div className="text-white">Messages will be here</div>
-			)}
+			{messages.length > 0 && <MessageList messages={messages} />}
 
 			{isLoading && <div className="text-white">Loading...</div>}
 
