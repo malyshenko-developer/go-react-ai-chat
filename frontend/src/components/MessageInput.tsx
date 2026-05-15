@@ -25,7 +25,7 @@ export const MessageInput = ({
 	}
 
 	return (
-		<div className="relative w-full">
+		<div className="fixed bottom-0 left-1/2 -translate-1/2 w-full max-w-3xl bg-[#072E6A]">
 			<button
 				type="button"
 				disabled={disabled}

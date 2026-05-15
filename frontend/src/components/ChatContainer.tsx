@@ -22,13 +22,21 @@ export const ChatContainer = () => {
 	return (
 		<div
 			className={
-				"text-white w-full max-w-3xl mx-auto px-4 py-8 flex-1 flex flex-col"
+				"text-white w-full max-w-3xl mx-auto px-4 pt-8 pb-24 flex-1 flex flex-col"
 			}
 		>
-			<div className="flex-1 overflow-y-auto">
+			<div
+				className={`flex-1 overflow-y-auto flex flex-col ${
+					messages.length === 0 ? "justify-center" : ""
+				}`}
+			>
 				{messages.length === 0 && <WelcomeScreen />}
-				{messages.length > 0 && <MessageList messages={messages} />}
-				{isLoading && <LoadingIndicator />}
+				{messages.length > 0 && (
+					<>
+						<MessageList messages={messages} />
+						{isLoading && <LoadingIndicator />}
+					</>
+				)}
 				{error && <ErrorMessage message={error} onClose={clearError} />}
 			</div>
 
