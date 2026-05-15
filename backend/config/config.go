@@ -10,12 +10,14 @@ const (
 	EnvAPIKey        = "API_KEY"
 	EnvAPIURL        = "API_URL"
 	EnvAllowedOrigin = "ALLOWED_ORIGIN"
+	EnvModel         = "MODEL"
 )
 
 const (
 	DefaultPort          = "8080"
 	DefaultAPIURL        = "https://openrouter.ai/api/v1/chat/completions"
 	DefaultAllowedOrigin = "http://localhost:5173"
+	DefaultModel         = "google/gemini-2.0-flash-exp:free"
 )
 
 type Config struct {
@@ -23,6 +25,7 @@ type Config struct {
 	APIKey        string
 	APIURL        string
 	AllowedOrigin string
+	Model         string
 }
 
 func Load() (*Config, error) {
@@ -30,6 +33,7 @@ func Load() (*Config, error) {
 		Port:          getEnv(EnvPort, DefaultPort),
 		APIURL:        getEnv(EnvAPIURL, DefaultAPIURL),
 		AllowedOrigin: getEnv(EnvAllowedOrigin, DefaultAllowedOrigin),
+		Model:         getEnv(EnvModel, DefaultModel),
 	}
 
 	cfg.APIKey = os.Getenv(EnvAPIKey)
