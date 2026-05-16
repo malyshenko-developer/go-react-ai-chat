@@ -27,12 +27,12 @@ export const ChatContainer = () => {
 		}
 	}, [handleMicToggle])
 
-	const handleSend = () => {
+	const handleSend = useCallback(() => {
 		if (inputValue.trim() && !isLoading) {
 			send(inputValue.trim())
 			setInputValue("")
 		}
-	}
+	}, [inputValue, isLoading, send])
 
 	return (
 		<div
