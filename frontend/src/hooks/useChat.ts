@@ -13,24 +13,24 @@ export const useChat = () => {
 		if (!text.trim()) return
 
 		const userMessage: Message = { role: "user", text }
-		setMessages(prevMessages => [...prevMessages, userMessage])
+		setMessages(prev => [...prev, userMessage])
 		setIsLoading(true)
 		setError(null)
 
 		try {
 			const response = await sendMessage(text)
 			if (response.error) {
-				setError(response.error)
+				setError(formatErrorMessage(response.error))
 			} else if (response.reply) {
 				const assistantMessage: Message = {
 					role: "assistant",
 					text: response.reply
 				}
-				setMessages(prevMessages => [...prevMessages, assistantMessage])
+				setMessages(prev => [...prev, assistantMessage])
 			}
 		} catch (e) {
-			const message = e instanceof Error ? e.message : "Unexpected error"
-			setError(message)
+			const rawMessage = e instanceof Error ? e.message : "Unexpected error"
+			setError(formatErrorMessage(rawMessage))
 		} finally {
 			setIsLoading(false)
 		}
@@ -39,4 +39,25 @@ export const useChat = () => {
 	const clearError = useCallback(() => setError(null), [])
 
 	return { messages, isLoading, error, send, clearError }
+}
+
+function formatErrorMessage(rawError: string): string {
+	const jsonStart = rawError.indexOf("{")
+	if (jsonStart !== -1) {
+		try {
+			const jsonStr = rawError.slice(jsonStart)
+			const parsed = JSON.parse(jsonStr)
+
+			if (parsed?.error?.code === 429) {
+				return "Too many requests. Please wait a moment and try again."
+			}
+			if (parsed?.error?.message) {
+				return parsed.error.message
+			}
+			if (parsed?.message) {
+				return parsed.message
+			}
+		} catch {}
+	}
+	return rawError
 }
