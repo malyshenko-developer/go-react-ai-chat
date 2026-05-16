@@ -74,3 +74,8 @@ Send a message and get an AI reply.
   "error": "Too many requests. Please wait a moment and try again."
 }
 ```
+
+## Demo
+
+- **Frontend**: [https://go-react-ai-chat.vercel.app](https://go-react-ai-chat.vercel.app)
+- **Backend**: [https://go-react-ai-chat-production.up.railway.app](https://go-react-ai-chat-production.up.railway.app)
