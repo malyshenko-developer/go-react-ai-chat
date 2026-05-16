@@ -36,7 +36,7 @@ func ChatHandler(cfg *config.Config) http.HandlerFunc {
 		reply, err := service.SendMessage(cfg, req.Message)
 		if err != nil {
 			log.Printf("Service error: %v", err)
-			writeError(w, "Internal server error", http.StatusInternalServerError)
+			writeError(w, err.Error(), http.StatusBadGateway)
 			return
 		}
 
