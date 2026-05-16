@@ -9,9 +9,14 @@ type ChatResponse struct {
 	Error string `json:"error,omitempty"`
 }
 
+type Provider struct {
+	Sort string `json:"sort,omitempty"`
+}
+
 type OpenrouterRequest struct {
 	Model    string    `json:"model"`
 	Messages []Message `json:"messages"`
+	Provider *Provider `json:"provider,omitempty"`
 }
 
 type Message struct {

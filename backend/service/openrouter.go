@@ -19,6 +19,9 @@ func SendMessage(cfg *config.Config, message string) (string, error) {
 		Messages: []model.Message{
 			{Role: "user", Content: message},
 		},
+		Provider: &model.Provider{
+			Sort: "throughput",
+		},
 	}
 
 	jsonBody, err := json.Marshal(reqBody)
