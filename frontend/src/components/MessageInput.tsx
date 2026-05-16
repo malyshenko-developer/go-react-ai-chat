@@ -8,6 +8,8 @@ interface MessageInputProps {
 	onSend: () => void
 	disabled?: boolean
 	placeholder?: string
+	listening: boolean
+	onMicToggle: () => void
 }
 
 export const MessageInput = ({
@@ -15,7 +17,9 @@ export const MessageInput = ({
 	onChange,
 	onSend,
 	disabled,
-	placeholder = "Ask whatever you want"
+	placeholder = "Ask whatever you want",
+	listening,
+	onMicToggle
 }: MessageInputProps) => {
 	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === "Enter") {
@@ -29,8 +33,12 @@ export const MessageInput = ({
 			<button
 				type="button"
 				disabled={disabled}
-				className="absolute left-4 top-1/2 -translate-y-1/2 text-[#2356A8] hover:text-blue-500 disabled:opacity-50 cursor-pointer"
-				onClick={() => alert("Voice input coming soon")}
+				onClick={onMicToggle}
+				className={`absolute left-4 top-1/2 -translate-y-1/2 disabled:opacity-50 cursor-pointer ${
+					listening
+						? "text-red-500 animate-pulse"
+						: "text-[#2356A8] hover:text-blue-500"
+				}`}
 			>
 				<Icon.Microphone width={22} height={22} />
 			</button>

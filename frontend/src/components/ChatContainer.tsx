@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 import { useChat } from "@/hooks/useChat.ts"
+import { useVoiceInput } from "@/hooks/useVoiceInput.ts"
 
 import { ErrorMessage } from "@/components/ErrorMessage.tsx"
 import { LoadingIndicator } from "@/components/LoadingIndicator.tsx"
@@ -13,9 +14,18 @@ export const ChatContainer = () => {
 	const [inputValue, setInputValue] = useState("")
 	const bottomRef = useRef<HTMLDivElement>(null)
 
+	const { listening, handleMicToggle, micAvailable } = useVoiceInput()
+
 	useEffect(() => {
 		bottomRef.current?.scrollIntoView({ behavior: "smooth" })
 	}, [messages])
+
+	const onMicToggle = useCallback(() => {
+		const finalTranscript = handleMicToggle()
+		if (finalTranscript) {
+			setInputValue(prev => (prev + " " + finalTranscript).trim())
+		}
+	}, [handleMicToggle])
 
 	const handleSend = () => {
 		if (inputValue.trim() && !isLoading) {
@@ -50,8 +60,10 @@ export const ChatContainer = () => {
 				value={inputValue}
 				onChange={setInputValue}
 				onSend={handleSend}
-				disabled={isLoading}
+				disabled={isLoading || !micAvailable}
 				placeholder="Ask whatever you want"
+				listening={listening}
+				onMicToggle={onMicToggle}
 			/>
 		</div>
 	)
